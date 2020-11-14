@@ -177,7 +177,7 @@ public class HomeController {
 		return "api";
 	}
 	
-	
+	// 작성자: 황근민
 	// db연결 test, 콘솔창을 확인 해주세요
 	@RequestMapping(value = "/db", method = RequestMethod.GET)
 	public String Testdb(Model model) throws Exception{
