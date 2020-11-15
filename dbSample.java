@@ -16,7 +16,7 @@ public class dbSample {
 	// 드라이버 변수로 선언
 	private static final String DRIVER = "net.ucanaccess.jdbc.UcanaccessDriver";
 	// 파일 경로를 변수로 선언
-	// 파일 경로 개발자마다 다름, jdbc:ucanaccess: 부분은 동일
+	// 파일 경로 개발자마다 다름, jdbc:ucanaccess:// 부분은 동일
 	private static final String dbURL = "jdbc:ucanaccess://C://Users//hgma1//eclipse-workspace//GYE//sample1.accdb";
 	
 	public void testConnetion() throws Exception {
