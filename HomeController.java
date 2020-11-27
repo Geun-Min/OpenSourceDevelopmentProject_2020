@@ -12,8 +12,6 @@ package co.df.ds;
 
 import java.io.BufferedInputStream;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -39,20 +37,55 @@ public class HomeController {
 		
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@RequestMapping(value = "/help", method = RequestMethod.GET)
+	public String YSE(Locale locale, Model model) {
+		return "help";
+	}
+	
+	
+	/*검색창 구현 */
+	@RequestMapping(value="member.do", method = RequestMethod.GET)
+	public String memberRegi(String sear_sel, String search, Model model) throws Exception
+	{
+		UsingOPENAPI conn = new UsingOPENAPI();
+		
+		if(sear_sel == "mvname")
+		{
+			String[] movieNames = new String[50];
+			
+			movieNames = conn.MovieNameSearch(search);
+			
+			model.addAttribute("movies", movieNames);
+			model.addAttribute("size", 50);
+			
+		}
+		else if(sear_sel == "makername")
+		{
+			String[] makerNames = new String[40];
+			
+			makerNames = conn.CompanyNameSearch(search);
+			
+			model.addAttribute("movies", makerNames);
+			model.addAttribute("size", 40);
+		}
+		
+		
+		return "main_page";
+	}
+	
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
-	 * annotation이용한 get/post 설정, url설정 
+	 * annotation이용한 get/post 설정, url설정
 	 */
-	
-	
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		//locale은 그냥 어디서 접속하는지 알도록 준거고 model객체는 jsp와 연동해서 사용하면 편리할듯?
 		
 		//원래있던 구문. 사용자 접속 위치를 나타냄
 		logger.info("Welcome home! The client locale is {}.", locale);
-
+		
+		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
@@ -60,7 +93,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 	
 		
-
+		
 		model.addAttribute("serverTime", formattedDate );
 		
 		// controller annotation 사용하면 리턴값 + .jsp붙이도록 설정 해서 home.jsp를 실행
@@ -179,19 +212,56 @@ public class HomeController {
 	
 	// 작성자: 황근민
 	// db연결 test, 콘솔창을 확인 해주세요
-	@RequestMapping(value = "/db", method = RequestMethod.GET)
-	public String Testdb(Model model) throws Exception{
-			
-		dbSample db = new dbSample();
-			
-		db.testConnetion();
-			
-		model.addAttribute("test", db);
-			
-		return "db";
-			
+		@RequestMapping(value = "/db", method = RequestMethod.GET)
+		public String Testdb(Model model) throws Exception{
+				
+			dbSample db = new dbSample();
+				
+			db.testConnetion();
+				
+			model.addAttribute("test", db);
+				
+			return "db";
+		}
+		
+	//작성자 : 임경수
+	//id만드는 창 출력
+	@RequestMapping(value="/register", method = RequestMethod.GET)
+	public String LoginPage(Model model)
+	{
+		return "register_page";
 	}
 	
+	//작성자 : 임경수
+	//같은 비밀번호 인지 확인후 db에 정보 저장한다
+	//작성자: 황근민
+	//입력한 아이디와 db에서 중복되는 아이디가 없으면 db에 정보를 저장한다.
+	@RequestMapping(value="register.do", method = RequestMethod.POST)
+	String RegisterHandle(String ID, String PW, String PW_repeat, String name, int age) throws Exception
+	{
+		
+		if(!PW.equals(PW_repeat))
+		{
+			System.out.println("동일한 비밀번호 입력");
+			return "register_page";
+		}
+		else
+		{
+			dbSample db = new dbSample();
+			
+			if(db.checkID(ID)) {
+				db.InsertInfo(ID, PW, name, age);
+				System.out.println("success");			
+				return "register_page";
+			}
+			
+			else
+			{
+				System.out.println("fail_중복된 아이디입니다.");			
+				return "register_page";
+			}
+		}
+	}
 }
 
  

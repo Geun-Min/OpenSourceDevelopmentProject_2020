@@ -9,6 +9,9 @@ package co.df.ds;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 
 public class dbSample {
@@ -17,7 +20,7 @@ public class dbSample {
 	private static final String DRIVER = "net.ucanaccess.jdbc.UcanaccessDriver";
 	// 파일 경로를 변수로 선언
 	// 파일 경로 개발자마다 다름, jdbc:ucanaccess:// 부분은 동일
-	private static final String dbURL = "jdbc:ucanaccess://C://Users//hgma1//eclipse-workspace//GYE//sample1.accdb";
+	private static final String dbURL = "jdbc:ucanaccess://C://Users//hgma1//eclipse-workspace//GYE//dataset.accdb";
 	
 	public void testConnetion() throws Exception {
 		// 드라이버 로드
@@ -31,5 +34,89 @@ public class dbSample {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	//임경수
+	//유저 정보 db에 추가하는 함수
+	//테스트 완료
+	public void InsertInfo(String ID, String PW, String UserName, int age) throws Exception
+	{
+		
+		Class.forName(DRIVER);
+				
+		
+		try(Connection conn = DriverManager.getConnection(dbURL)){
+			System.out.println("연결 성공");
+			
+			
+				PreparedStatement ps = conn.prepareStatement(
+						"insert into userinfo(id, username, password, age) "
+						+ "values (?, ?, ?, ?)");
+				
+				ps.setString(1, ID);
+				ps.setString(2, UserName);
+				ps.setString(3, PW);
+				ps.setInt(4, age);
+				
+				ps.executeUpdate();
+				
+				System.out.println("dataExecuted");
+			
+				
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//임경수
+	//같은 아이디 있는지 확인하는 함수
+	//테스트 x
+	public String GetSpeID(String ID) throws Exception
+	{
+		Class.forName(DRIVER);
+		
+		// db 연결, 확인은 콘솔창으로
+		try(Connection conn = DriverManager.getConnection(dbURL)){
+			System.out.println("연결 성공");
+			
+			String SQL = "select id from userinfo where id = "+ID;
+			Statement stmt = conn.createStatement();
+			
+			ResultSet rs = stmt.executeQuery(SQL);
+			
+			return rs.getString(1);
+			
+			
+		} catch(Exception e) {
+			return " ";
+		}
+	}
+	
+	// 황근민
+	// 아이디 중복 체크 함수
+	public boolean checkID(String id) throws Exception
+	{
+		Class.forName(DRIVER);
+		
+		try(Connection conn = DriverManager.getConnection(dbURL))
+		{
+			System.out.println("연결 성공");
+			
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT ID from userinfo");
+			
+			while(rs.next())
+			{
+				if(rs.getString("ID").equals(id))
+					return false; 
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			return true;
+		
+	}
+	}
 
-}
+
