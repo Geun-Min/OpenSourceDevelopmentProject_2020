@@ -1,13 +1,17 @@
 <!-- 
 프로그램명 : 떼껄룩 커뮤니티 페이지
-작성자 :임경수
+작성자 :임경수, 황근민
 작성일자 : 2020-11-26
 프로그램 설명: 리뷰 보여주는 틀 작성하고, 자바스크립트를 이용해서 리뷰 작성하게 한다
 -->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+<!--황근민 수정-->
+<%@ page import="java.util.*" %>
+<!--황근민 수정-->
+
 <html>
 	
 	<head>
@@ -15,6 +19,13 @@
 			*{
 				margin:0px;
 				padding:0px;
+			}
+            .nanumsquare {
+             font-family: 'NanumSquare', sans-serif !important;
+            }
+			body{
+				background-color:#0b0c2a;
+                 font-weight: bold;
 			}
 			#userid{
 				margin: 8 8;
@@ -37,9 +48,10 @@
 			h1{
 				text-align:center;
 				font-size:100px;
+                color:white;
 			}
 			.header{
-				background-color:yellow;
+				background-color:#070720;
 				width:100%;
 				height:60px;
 				display:block;
@@ -69,7 +81,7 @@
 					margin: 0;
 					padding: 0;
 					
-					background-color: #333;
+					background-color: #1A1B28;
 				}
 				ul:after{
 					content:'';
@@ -90,12 +102,12 @@
 					background-color: #111;
 				}
 				.active {
-					background-color: #4CAF50;
+					background-color: #e53637;
 				}
 			.movies{
 				
 				
-				background-color:blue;
+				background-color:#252642;
 				
 				
 				}
@@ -109,7 +121,7 @@
 			
 			
 			.footer{
-				background-color:yellow;
+				background-color:#070720;
 				width:100%;
 				height:60px;
 				bottom:0px;
@@ -204,7 +216,7 @@
 				top:10%;
 				width:70%;
 				height:80%;
-				background-color:blue;
+				background-color:#252642;
 				position:absolute;
 				display:none;
 			}
@@ -224,23 +236,25 @@
 				
 				width:80%;
 				height:80%;
-				background-color:green;
+				background-color:silver;
 				display:flex;
 				flex-direction:column;
 				justify-content:center;
 				align-items:center;
 			}
-			
-			#write_review_name{
+			<!--황근민 수정-->
+			#title{
 				width:80%;
 				height:10%;
 				margin-bottom:5%;
 			}
 			
-			#write_review_content{
+			
+			#contents{
 				width:70%;
 				height:50%;
 			}
+			<!--황근민 수정-->
 			
 			#is_spoiler{
 				font-size:30px;
@@ -266,42 +280,44 @@
 	</head>
 	<body>
 		<div class="header">
+			<!--황근민 수정-->
 			<c:choose>
-			<c:when test="${sessionScope.loginCheck eq true}">        	
-        	${sessionScope.id} 님이 로그인 되었습니다.  
-        	<form action="logout.do" method='post'>
-        		<button type="submit" class="site-btn">로그아웃</button>
-        	</form>
-    		</c:when>
-    		<c:otherwise>
-			<form>
-				<input id='userid' type='text' placeholder='ID'/>
-				<input id='passwd' type='password' placeholder='password'/>
-				<input id='id_submit' type='submit'>
-			</form>
-			<a id='sign_in' href="#sign">회원가입</a>
-			</c:otherwise>
+				<c:when test="${sessionScope.loginCheck eq true}">     
+        			<form action="logout.do" method='post'>
+        				<button type="submit" class="site-btn">로그아웃</button>
+        			</form>
+    			</c:when>
+				<c:otherwise>
+					<a class="site-btn" href="/GYE/login">로그인</a>
+				</c:otherwise>
 			</c:choose>
+			<!--황근민 수정-->
 		</div>
 		<h1>Take A Look</h1>
 		
+		<!--황근민 수정-->
 		<div class="container">
 			<div class="buttons">
 				<ul>
-					<li><a href="/GYE">메인</a></li>
-					<li><a href="/GYE/BoxOffice">박스오피스</a></li>
-					<li><a href="#recom">추천영화</a></li>
-					<li><a class="active" href="/GYE/comunity">커뮤니티</a></li>
-					<c:choose>
+				<c:choose>
 					<c:when test="${sessionScope.loginCheck eq true}">
-					<li id='write_btn'><a href='javascript:void(0);' onclick='open_form();'>글쓰기</a></li>
+						<li><a href="/GYE">메인</a></li>
+						<li><a href="/GYE/BoxOffice">박스오피스</a></li>
+						<li><a href="#recom">추천영화</a></li>
+						<li><a class="active" href="/GYE/comunity">커뮤니티</a></li>
+						<li id='write_btn'><a href='javascript:void(0);' onclick='open_form();'>글쓰기</a></li>
 					</c:when>
-					</c:choose>
+					<c:otherwise>
+						<li><a href="/GYE">메인</a></li>
+						<li><a href="/GYE/BoxOffice">박스오피스</a></li>
+						<li><a href="#recom">추천영화</a></li>
+						<li><a class="active" href="/GYE/comunity">커뮤니티</a></li>
+					</c:otherwise>
+				</c:choose>
 				</ul>
 			</div>
+			<div class='reviews_container' id='first'>
 		
-		<div class='reviews_container' id='first'>
-				
 				<div id='review'>
 					<p id='review_number'>번호</p>
 					<p id='review_name'>제목</p>
@@ -312,36 +328,33 @@
 				</div>
 				
 			</div>
-			<div class='reviews_container'>
-				
-				<div id='review'>
-					<p id='review_number'>1</p>
-					<p id='review_name'><a href='#'>어벤져스 타노스죽음</a></p>
-					<p id='writer_name'>임경수</p>
-					<p id='like_num'>2</p>
-					<p id='hate_num'>33</p>
-					<p id='write_time'>2020/01/01</p>
-				</div>
-				
-			</div>
-			<div class='reviews_container'>
-				
-				<div id='review'>
-					<p id='review_number'>2</p>
-					<p id='review_name'><a href='#'>아이언맨 죽음</a></p>
-					<p id='writer_name'>임경수</p>
-					<p id='like_num'>1</p>
-					<p id='hate_num'>22</p>
-					<p id='write_time'>2020/12/11</p>
-				</div>
-				
-			</div>
 			
-			
-			
-		</div>
-			
-		</div>
+			<%ArrayList<String> Community = (ArrayList)request.getAttribute("Community"); %>
+			<%int i = Community.size(); %>
+			<%for(int k=0;k<i;k+=8)
+			{ %>
+				<div class='reviews_container'>
+					<div id='review'>
+						<p id='review_number'><%=Community.get(k+7)%></p>
+						<% if(Community.get(k+6).equals("O") || Community.get(k+6).equals("o")) 
+						{%>
+							<p id='review_name'><a href='/GYE/comunity_post?title=<%=Community.get(k+1)%>'>주의!!!스포일러 포함 글</a></p>						
+						<%}	
+						else
+						{%>
+							<p id='review_name'><a href='/GYE/comunity_post?title=<%=Community.get(k+1)%>'><%=Community.get(k+1)%></a></p>						
+						<%}	
+						%>							
+						<p id='writer_name'><%=Community.get(k)%></p>
+						<p id='like_num'><%=Community.get(k+3)%></p>
+						<p id='hate_num'><%=Community.get(k+4)%></p>
+						<p id='write_time'><%=Community.get(k+5)%></p>
+				</div>				
+			</div>	
+		 	<%} 
+		 	%>
+		 </div>
+		 <!--황근민 수정-->
 		<div class="footer">
 			<form action='member.do' method='get'>
 			<select name='sear_sel'>
@@ -355,12 +368,20 @@
 		
 		<div id='write_box'>
 			<input type='button' id='close_button' value='창 닫기' onclick='close_form();'>
-			<form id='wb_form'>
-				<input type='text' id='write_review_name' placeholder='리뷰 제목' />
-				<input type='text' id='write_review_content' placeholder='리뷰' />
-				<label id='is_spoiler'><input type='checkbox' value='contain_spoiler' checked />스포일러 포함</label>
-				<input id='submit_review' type='submit'>
+			<!--황근민 수정-->
+			<form id='wb_form' action='community.do' method='get'>
+				<c:choose>
+					<c:when test="${sessionScope.loginCheck eq true}">
+						<input type='text' id='writer' name="Writer" style="display:none" value='${sessionScope.id}' ></input>
+						<input type='text' id='title' name="Title" placeholder='글 제목' />
+						<input type='text' id='contents' name="Contents" placeholder='내용' />
+						<input type='text' id='spoiler' name="Spoiler" placeholder='스포일러유무(o/x)' />
+						
+						<input id='submit_review' value='글 작성' type='submit'>
+					</c:when>
+				</c:choose>
 			</form>
+			<!--황근민 수정-->
 		</div>
 		
 		<script>

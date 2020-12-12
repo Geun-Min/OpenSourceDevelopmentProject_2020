@@ -6,8 +6,8 @@
 <head>
 
     <!--디자인 스타일-->
-
     <style>
+       
         *, ::after, ::before {
             box-sizing: border-box;
         }
@@ -44,16 +44,16 @@
             overflow: visible;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,h2, h3, h4, h5, h6 {
             margin-top: 0;
             margin-bottom: .5rem;
         }
 
         h7 {
-            left: 45%;
+            left:45%;
             font-size: 50px;
-            color: white;
-            position: relative;
+            color:white;
+         position: relative;
         }
 
         .lgin_body {
@@ -160,7 +160,6 @@
                     color: inherit;
                     text-decoration: none;
                 }
-
         button {
             border-radius: 0;
         }
@@ -2357,7 +2356,7 @@
     </style>
 </head>
 <body>
-    <!-- Page Preloder -->    <!-- Page Preloder -->
+    <!-- Page Preloder -->
     <div id="preloder" style="display: none;">
         <div class="loader" style="display: none;"></div>
     </div>
@@ -2366,7 +2365,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-2">
-                    <h1><a href="./home.html">때껄룩</a></h1> <!--로고 -->
+                    <h1><a href="/GYE">떼껄룩</a></h1> <!--로고 -->
                 </div>
             </div>
             <div id="mobile-menu-wrap">
@@ -2378,81 +2377,50 @@
                 </div>
             </div>
         </div>
-    </header>
-    <!-- 헤더 끝 -->
-    <!-- 영화 세부정보 페이지 -->    <!-- Login Section Begin -->
-    <section class="login spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="login__form">
-                        <h3>로그인</h3>
-                         <!-- 황근민 수정 -->
-                         <form action="login.do" method='post'>
-                            <div class="input__item">
-                                <input name="ID" type="text"  autocomplete='off' placeholder="아이디">
-                                <span class="icon_mail"></span>
-                            </div>
-                            <div class="input__item">
-                                <input name="PW" type="password" autocomplete='off' placeholder="비밀번호">
-                                <span class="icon_lock"></span>
-                            </div>
-                            <button type="submit" class="site-btn">로그인</button>
-                            <!-- 황근민 수정 -->
-                        </form>
-                        <a href="/GYE" class="forget_pass">비밀번호 찾기</a>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="login__register">
-                        <h3>아이디가 없으신가요?</h3>
-                        <a href="/GYE/register" class="primary-btn">회원가입</a>
-                    </div>
-                </div>
+        <!-- 헤더 끝 -->
+        <!-- 로그인 Begin -->
+        <!--황근민 수정-->
+        <h7>회원가입</h7>
+            <div class='lgin_body'>
+                <form action='register.do' method='post'>
+                    <input id='idname' name='ID' type='text' placeholder='아이디 입력' />
+                    <input id='psword' name='PW' type='password' placeholder='비밀번호 입력' />
+                    <input id='psword_rpt' name='PW_repeat' type='password' placeholder='비밀번호 한번더' />
+                    <input id='name' name='name' type='text' placeholder='이름'/>
+                    <input id='age' name='age' type='number' min='1' max='200' placeholder='나이' />
+                    <input id='question' name='Question' type='text' placeholder='질문(비밀번호 찾을 때 사용됩니다)'/>
+                    <input id='answer' name='Answer' type='text' placeholder='답변'/>
+
+                    <input id='submit_btn' type='submit'/>회원가입
+                </form>
             </div>
-            <div class="login__social">
-                <div class="row d-flex justify-content-center">
+        <!--황근민 수정-->
+        <!-- 로그인 End -->
+        <!-- Footer Section Begin -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="footer__logo">
+                            
+                        </div>
+                    </div>
                     <div class="col-lg-6">
+                        <div class="footer__nav">
+                            <form>
+                                <select name='sear_sel'>
+                                    <option value=''>영화이름검색</option>
+                                    <option value=''>영화사이름검색</option>
+                                </select>
+                                <input type='text'>
+                                <input type='submit'>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
-    <!-- Login Section End -->
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer__logo">
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="footer__nav">
-                        <form>
-                            <select name='sear_sel'>
-                                <option value=''>영화이름검색</option>
-                                <option value=''>영화사이름검색</option>
-                            </select>
-                            <input type='text'>
-                            <input type='submit'>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-    <!-- Search model Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch"><i class="icon_close"></i></div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
+        </footer>
+        <!-- Footer Section End -->
 
 
 
