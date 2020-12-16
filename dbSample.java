@@ -252,42 +252,31 @@ public class dbSample {
 			return false;
 		}
 		
-		//<!--황근민 수정-->
+		//<!--황근민 추가-->
 		// 작성자 황근민
 		// 비밀번호 찾기 함수
-		// 아이디, 사용자 이름, 사용자 정의 질문, 답변을 입력받고 모두가 일치하면 비밀번호를 반환하고 하나라도 틀리면 반환하지 않는다.
-		public String Find_password(String id, String UserName, String Question, String Answer) throws Exception
+		// 아이디, 사용자 정의 질문, 답변을 입력받고 모두가 일치하면 비밀번호를 반환하고 하나라도 틀리면 틀렸다는 문장을 반환한다.
+		public String Find_password(String id, String Question, String Answer) throws Exception
 		{
 			Class.forName(DRIVER);				 
 			try(Connection conn = DriverManager.getConnection(dbURL))
 			{
 				System.out.println("연결 성공");
-				String SQL = "SELECT * from userinfo where id = " + id;
+				String SQL = "SELECT * from userinfo";
 				Statement st = conn.createStatement();
 				ResultSet rs = st.executeQuery(SQL);
 						
 				while(rs.next())
 				{
-					if(rs.getString("username").equals(UserName))
-					{
-						if(rs.getString("question").equals(Question))
-						{
-							if(rs.getString("answer").equals(Answer))
-								return rs.getString("password");
-							
-							else
-								return Answer;
-						}
-						else
-							return Question;
-					}
-					else
-						return UserName;
+	
+					if(rs.getString("ID").equals(id)&&rs.getString("question").equals(Question)&&rs.getString("answer").equals(Answer))
+						return rs.getString("password");
 					
 				}						
 				}catch(Exception e) {	e.printStackTrace();	}						
-				return "";
+				return "틀린 회원 정보입니다.";
 		}
+		//<!--황근민 추가-->
 		
 		// 작성자 : 황근민
 		// 사용자가 커뮤니티 게시판에 글을 작성하면 글 정보를 DB에 저장하는 함수
@@ -344,11 +333,11 @@ public class dbSample {
 					Community.add(rs.getString("Spoiler"));
 					Community.add(rs.getString("ID"));
 				}
+				
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			
 			return Community;
 		}
-		//<!--황근민 수정-->
 }

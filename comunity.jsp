@@ -329,10 +329,10 @@
 				
 			</div>
 			
-			<%ArrayList<String> Community = (ArrayList)request.getAttribute("Community"); %>
-			<%int i = Community.size(); %>
-			<%for(int k=0;k<i;k+=8)
-			{ %>
+			 <!--황근민 추가-->
+			<%ArrayList<String> Community = (ArrayList<String>)request.getAttribute("Community"); %>			
+			<% int k = 0; %>			
+			<%for(k=0; k<Community.size();k=k+8){%>
 				<div class='reviews_container'>
 					<div id='review'>
 						<p id='review_number'><%=Community.get(k+7)%></p>
@@ -349,12 +349,34 @@
 						<p id='like_num'><%=Community.get(k+3)%></p>
 						<p id='hate_num'><%=Community.get(k+4)%></p>
 						<p id='write_time'><%=Community.get(k+5)%></p>
-				</div>				
-			</div>	
-		 	<%} 
-		 	%>
+						
+					</div>				
+				</div>	
+		 	<%}
+		 	%> 	
+		 		<div class='reviews_container'>
+					<div id='review'>
+						<p id='review_number'><%=Community.get(Community.size()-1)%></p>
+						<% if(Community.get(Community.size()-2).equals("O") || Community.get(Community.size()-2).equals("o")) 
+						{%>
+							<p id='review_name'><a href='/GYE/comunity_post?title=<%=Community.get(Community.size()-7)%>'>주의!!!스포일러 포함 글</a></p>						
+						<%}	
+						else
+						{%>
+							<p id='review_name'><a href='/GYE/comunity_post?title=<%=Community.get(Community.size()-7)%>'><%=Community.get(Community.size()-7)%></a></p>						
+						<%}	
+						%>							
+						<p id='writer_name'><%=Community.get(Community.size()-8)%></p>
+						<p id='like_num'><%=Community.get(Community.size()-5)%></p>
+						<p id='hate_num'><%=Community.get(Community.size()-4)%></p>
+						<p id='write_time'><%=Community.get(Community.size()-3)%></p>
+						
+					</div>				
+				</div>		
 		 </div>
-		 <!--황근민 수정-->
+		 
+		 <!--황근민 추가-->
+		 
 		<div class="footer">
 			<form action='member.do' method='get'>
 			<select name='sear_sel'>

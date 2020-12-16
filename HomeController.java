@@ -372,9 +372,50 @@ public class HomeController {
 				
 			model.addAttribute("Community", Community);		
 			
+			
 			return "comunity";
 	}
 	//<!--황근민 수정-->
+	
+	//<!--황근민 추가-->
+	//작성자:황근민
+	//비밀번호 찾기 화면을 출력한다
+	@RequestMapping(value="/find_password", method = RequestMethod.GET)
+	public String Find_Password(Model model)
+	{
+		return "find_password";
+	}
+	
+	//작성자:황근민
+	//사용자가 입력한 정보를 바탕으로 비밀번호를 반환하거나 틀린 정보임을 반환한다.
+	@RequestMapping(value="/find_password.do", method = RequestMethod.POST)
+	String FindPasswordHandler(Model model, String ID, String Question, String Answer) throws Exception
+	{
+		dbSample db = new dbSample();
+		String result;
+		
+		result = db.Find_password(ID, Question, Answer);
+		
+		model.addAttribute("result", result);
+		
+		return "find_password_result";
+	}
+	
+	//작성자:황근민
+	//비밀번호 찾기의 결과 화면을 출력한다
+	@RequestMapping(value="/find_password_result", method = RequestMethod.POST)
+	public String Find_Password_Result(Model model, String ID, String Question, String Answer) throws Exception
+	{
+		dbSample db = new dbSample();
+		String result;
+		
+		result = db.Find_password(ID, Question, Answer);
+		
+		model.addAttribute("result", result);
+		
+		return "find_password_result";
+	}
+	//<!--황근민 추가-->
 }
 
  
